@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/firebase.js", "src/index.tsx"  ]
 }
