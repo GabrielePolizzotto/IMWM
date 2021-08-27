@@ -1,5 +1,9 @@
 import { FC, useState } from "react";
 import { useHistory } from "react-router";
+import { Container } from "../../components-ui/Container";
+import { Form } from "../../components-ui/Form";
+import { Header } from "../../components-ui/Header";
+import { Input, InputLabelWrapper, Label } from "../../components-ui/Input";
 import { useAuth } from "../../contexts/AuthContext";
 
 export const ViewDashboard: FC = (): JSX.Element => {
@@ -18,15 +22,21 @@ export const ViewDashboard: FC = (): JSX.Element => {
   }
 
   return (
-    <>
-      <h2>Dashboard</h2>
-      <div>
-        <h3>Profile</h3>
-        {error && alert({error}) }
-        <p>Email: {currentUser.email}</p>
-      </div>
-      <button onClick={handleLogout}>Log Out</button>
-    </>
+    <Container>
+      <Header>
+        <h2>Dashboard</h2>
+
+          {error && alert({error}) }
+          <p>Email: {currentUser.email}</p>
+          <button onClick={handleLogout}>Log Out</button>
+      </Header>
+        <Form>
+        <InputLabelWrapper>
+          <Label>Ricerca cliente</Label>
+          <Input/>
+        </InputLabelWrapper>
+        </Form>
+    </Container>
   )
   
 };
