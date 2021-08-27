@@ -1,6 +1,10 @@
 import { FC, SyntheticEvent, useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import {Link, useHistory} from "react-router-dom"
+import { Container } from "../../components-ui/Container";
+import { Button } from "../../components-ui/Button";
+import { Form } from "../../components-ui/Form";
+import { InputLabelWrapper, Label, Input } from "../../components-ui/Input";
 
 export const ViewLogin: FC = (): JSX.Element => {
   const emailRef = useRef<HTMLInputElement | null>(null)
@@ -29,25 +33,23 @@ export const ViewLogin: FC = (): JSX.Element => {
   }
 
   return (
-    <div>
+    <Container>
       <h2>Log In</h2>
       {error && <div>{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
-        <label>Email</label>
-        <input type="email" ref={emailRef} required/>
-        </div>
-        <div>
-        <label>Password</label>
-        <input type='password' ref={passwordRef} />
-        </div>
-        <div>
-        <button disabled={loading}>Login</button>
-        </div>
-      </form>
-      <div>Need an account?
+      <Form onSubmit={handleSubmit}>
+        <InputLabelWrapper>
+        <Label>Email</Label>
+        <Input type="email" ref={emailRef} required/>
+        </InputLabelWrapper>
+        <InputLabelWrapper>
+        <Label>Password</Label>
+        <Input type='password' ref={passwordRef} />
+        </InputLabelWrapper>
+        <Button type="submit"  disabled={loading}>Login</Button>
+      </Form>
+      <div>Need an account? 
         <Link to="/signup">Sign up</Link>
       </div>
-    </div>
+    </Container>
   );
 };

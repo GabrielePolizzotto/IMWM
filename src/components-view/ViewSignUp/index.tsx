@@ -1,11 +1,15 @@
 import { FC, SyntheticEvent, useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { Button } from "../../components-ui/Button";
+import { Container } from "../../components-ui/Container";
+import { Form } from "../../components-ui/Form";
+import { Input, InputLabelWrapper, Label } from "../../components-ui/Input";
 import { useAuth } from "../../contexts/AuthContext";
 
 export const ViewSignUp: FC = (): JSX.Element => {
-  const emailRef = useRef<HTMLInputElement | null>(null)
-  const passwordRef = useRef<HTMLInputElement | null>(null)
-  const passwordConfirmRef = useRef<HTMLInputElement | null>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
+  const passwordConfirmRef = useRef<HTMLInputElement>(null)
 
   const {signup} = useAuth()
 
@@ -17,14 +21,14 @@ export const ViewSignUp: FC = (): JSX.Element => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
 
-    if(passwordConfirmRef.current!.value !== passwordRef.current!.value) {
+    if(passwordConfirmRef.current?.value !== passwordRef.current?.value) {
       return setError('Passwords do not match')
     }
 
     try {
       setError('')
       setLoading(true)
-      await signup(emailRef.current!.value, passwordRef.current!.value)
+      await signup(emailRef.current?.value, passwordRef.current?.value)
       history.push("/login")
     } catch {
       setError('Failed to create an account')
@@ -33,29 +37,29 @@ export const ViewSignUp: FC = (): JSX.Element => {
   }
 
   return (
-    <div>
-      <h2>Sign Up</h2>
+    <Container>
       {error && <div>{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
-        <label>Email</label>
-        <input type="email" ref={emailRef} required/>
+      <div>
+        <Form onSubmit={handleSubmit}>
+        <h2>Sign Up</h2>
+        <InputLabelWrapper>
+          <Label>Email</Label>
+          <Input  type='email' ref={emailRef} required/>
+        </InputLabelWrapper>
+        <InputLabelWrapper>
+          <Label>Password</Label>
+          <Input  type='password' ref={passwordRef} required/>
+        </InputLabelWrapper>
+        <InputLabelWrapper>
+          <Label>Confirm password</Label>
+          <Input type='password' ref={passwordConfirmRef} required/>
+        </InputLabelWrapper>
+          <Button type="submit" disabled={loading}>Sign Up</Button>
+        </Form>
+        <div style={{textAlign:'center'}}>Already have an account? 
+          <Link to="/login">Log In</Link>
         </div>
-        <div>
-        <label>Password</label>
-        <input type='password' ref={passwordRef} />
-        </div>
-        <div>
-        <label>Confirm password</label>
-        <input type='password' ref={passwordConfirmRef}  />
-        </div>
-        <div>
-        <button disabled={loading}>Signup</button>
-        </div>
-      </form>
-      <div>Already have an account?
-        <Link to="/login">login</Link>
       </div>
-    </div>
+    </Container>
   );
 };

@@ -11,7 +11,6 @@ export const App: FC = (): JSX.Element => {
     <BrowserRouter>
       <AuthProvider>
           <Switch>
-
             <PrivateRoute 
             //@ts-ignore
             exact path="/" component={ViewDashboard} />
